@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign-up Page</title>
+  </head>
+  <body>
+    <h1>New User Signup/Register</h1>
+    <div>
+      <form id="form">
+        <label>Username</label>
+        <input id="username" type="text" placeholder="enter username" />
+        <label>Email</label>
+        <input id="email" type="email" placeholder="enter email" />
+        <label>Mobile</label>
+        <input id="mobile" type="number" placeholder="enter mobile" />
+        <input type="submit" />
+      </form>
+    </div>
+    <a href="http://127.0.0.1:5500/E-Commerce/Login.html">
+      <button>Login Page</button>
+    </a>
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit", regFun);
+
+  let regData = JSON.parse(localStorage.getItem("regData")) || [];
+
+  function regFun(event) {
+    event.preventDefault();
+    let obj = {
+      username: form.username.value,
+      email: form.email.value,
+      mobile: form.mobile.value,
+    };
+
+    let register = false;
+    if (regData.length >= 1) {
+      for (let i = 0; i < regData.length; i++) {
+        if (
+          regData[i].username == form.username.value ||
+          regData[i].email == form.email.value ||
+          regData[i].mobile == form.mobile.value
+        ) {
+          register = true;
+        }
+      }
+    }
+    if (regData.length == 0) {
+      regData.push(obj);
+      localStorage.setItem("regData", JSON.stringify(regData));
+      alert("registered succesfully");
+    } else if (regData.length >= 1) {
+      if (register == true) {
+        alert("already registered");
+      } else {
+        regData.push(obj);
+        localStorage.setItem("regData", JSON.stringify(regData));
+        alert("registered succesfully");
+      }
+    }
+  }
+</script>

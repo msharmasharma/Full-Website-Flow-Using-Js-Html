@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+  </head>
+  <body>
+    <h1>Cart Page</h1>
+    <div>
+      <h3 id="cartValue"></h3>
+      <h3 id="cartPro"></h3>
+    </div>
+    <div id="container"></div>
+  </body>
+</html>
+<script>
+  let cartData = JSON.parse(localStorage.getItem("cartData"));
+  let container = document.getElementById("container");
+  showData(cartData);
+  function showData(cartData) {
+    cartData.map((i, index) => {
+      let proDiv = document.createElement("div");
+      let image = document.createElement("img");
+      image.setAttribute("src", i.pImage);
+      let name = document.createElement("h3");
+      name.textContent = i.pName;
+      let price = document.createElement("h3");
+      price.textContent = i.pPrice;
+      let button = document.createElement("button");
+      button.textContent = "Remove Product From Cart";
+      button.addEventListener("click", function () {
+        remFun(index);
+      });
+      proDiv.append(image, name, price, button);
+      container.append(proDiv);
+    });
+  }
+  let sum = 0;
+  for (let i = 0; i < cartData.length; i++) {
+    sum = sum + Number(cartData[i].pPrice);
+  }
+  document.getElementById("cartValue").textContent = `Cart Value :- ${sum}`;
+  document.getElementById("cartPro").textContent = `Total Products :- ${cartData.length}`;
+  function remFun(index) {
+    cartData.splice(index, 1);
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+    window.location.reload();
+  }
+</script>

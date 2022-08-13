@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Page</title>
+  </head>
+  <body>
+    <h1>Latest Products</h1>
+    <a href="http://127.0.0.1:5500/E-Commerce/Cart.html"
+      ><button>Go to Cart</button></a
+    >
+    <div>
+      <h3>Sorting Options</h3>
+      <select id="sort">
+        <option value="">Select</option>
+        <option value="nAsc">name ASC</option>
+        <option value="nDesc">name DESC</option>
+        <option value="pAsc">price ASC</option>
+        <option value="pDesc">price DESC</option>
+      </select>
+    </div>
+    <div id="container"></div>
+  </body>
+</html>
+<script>
+  let productData = JSON.parse(localStorage.getItem("proData"));
+  let container = document.getElementById("container");
+  showProducts(productData);
+  function showProducts(productData) {
+    productData.map((i) => {
+      let proDiv = document.createElement("div");
+      let image = document.createElement("img");
+      image.setAttribute("src", i.pImage);
+      let name = document.createElement("h3");
+      name.textContent = i.pName;
+      let price = document.createElement("h3");
+      price.textContent = i.pPrice;
+      let button = document.createElement("button");
+      button.textContent = "Add Product to Cart";
+      button.addEventListener("click", function () {
+        cartFun(i);
+      });
+      proDiv.append(image, name, price, button);
+      container.append(proDiv);
+    });
+  }
+  let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+
+  function cartFun(i) {
+    let obj = {
+      pName: i.pName,
+      pImage: i.pImage,
+      pPrice: i.pPrice,
+    };
+    cartData.push(obj);
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+    alert("Product Added To The Cart");
+  }
+
+  document.getElementById("sort").addEventListener("change", sortFun);
+
+  function sortFun() {
+    if (this.value == "nDesc") {
+      productData.sort((a, b) => {
+        if (a.pName < b.pName) {
+          return -1;
+        }
+      });
+      localStorage.setItem("proData", JSON.stringify(productData));
+      window.location.reload();
+    }
+    if (this.value == "nAsc") {
+      productData.sort((a, b) => {
+        if (a.pName > b.pName) {
+          return -1;
+        }
+      });
+      localStorage.setItem("proData", JSON.stringify(productData));
+      window.location.reload();
+    }
+    if (this.value == "pAsc") {
+      productData.sort((a, b) => {
+        return a.pPrice - b.pPrice;
+      });
+      localStorage.setItem("proData", JSON.stringify(productData));
+      window.location.reload();
+    }
+
+    if (this.value == "pDesc") {
+      productData.sort((a, b) => {
+        return b.pPrice - a.pPrice;
+      });
+      localStorage.setItem("proData", JSON.stringify(productData));
+      window.location.reload();
+    }
+  }
+</script>

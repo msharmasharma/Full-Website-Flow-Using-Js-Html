@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+  </head>
+  <body>
+    <h1>Admin's Battleground</h1>
+    <form id="form">
+      <label>Product Name</label>
+      <input id="name" type="text" placeholder="enter product name" />
+      <label>Product Image</label>
+      <input id="image" type="url" placeholder="enter product image url" />
+      <label>Product Price</label>
+      <input id="price" type="number" placeholder="enter product price" />
+      <input type="submit" />
+    </form>
+
+    <a href="http://127.0.0.1:5500/E-Commerce/Product.html"
+      ><button>Product Page</button></a
+    >
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit", proFun);
+
+  let productData = JSON.parse(localStorage.getItem("proData")) || [];
+
+  function proFun(e) {
+    e.preventDefault();
+
+    let obj = {
+      pName: form.name.value,
+      pImage: form.image.value,
+      pPrice: form.price.value,
+    };
+    productData.push(obj);
+    localStorage.setItem("proData", JSON.stringify(productData));
+    alert("Product Added ");
+  }
+  console.log(productData);
+</script>

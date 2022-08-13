@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <h1>Login Page</h1>
+    <form id="form">
+      <label>UserName</label>
+      <input id="username" type="text" placeholder="enter username" />
+      <label>Email</label>
+      <input id="email" type="email" placeholder="enter email" />
+      <input type="submit" />
+    </form>
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit", sigFun);
+  let regData = JSON.parse(localStorage.getItem("regData"));
+
+  function sigFun(e) {
+    e.preventDefault();
+    if (
+      form.username.value == "admin" &&
+      form.email.value == "admin@mail.com"
+    ) {
+      window.location.href = "Admin.html";
+    } else {
+      let sign = false;
+      for (let i = 0; i < regData.length; i++) {
+        if (
+          regData[i].username == form.username.value &&
+          regData[i].email == form.email.value
+        ) {
+          sign = true;
+        }
+      }
+      if (sign == false) {
+        alert("Please register first");
+        window.location.href = "Signup.html";
+      } else {
+        alert(form.username.value + " Signed In");
+        window.location.href = "Product.html";
+      }
+    }
+  }
+  console.log(regData);
+</script>
